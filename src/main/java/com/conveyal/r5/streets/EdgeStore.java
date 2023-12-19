@@ -191,7 +191,7 @@ public class EdgeStore implements Serializable {
     public List<CostField> costFields;
 
     /** The street layer of a transport network that the edges in this edgestore make up. */
-    public StreetLayer layer;
+    public RoutableStreetLayer layer;
 
     /** As a convenience, the set of all edge flags that control which modes can traverse the edge */
     public static final transient EnumSet<EdgeFlag> PERMISSION_FLAGS = EnumSet
@@ -204,7 +204,7 @@ public class EdgeStore implements Serializable {
      */
     private long generatedOSMID = 1;
 
-    public EdgeStore (VertexStore vertexStore, StreetLayer layer, int initialSize) {
+    public EdgeStore (VertexStore vertexStore, RoutableStreetLayer layer, int initialSize) {
         this.vertexStore = vertexStore;
         this.layer = layer;
 
