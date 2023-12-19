@@ -68,7 +68,7 @@ public class Split {
      * Find a location on an existing street near the given point, without actually creating any vertices or edges.
      * @return a new Split object, or null if no edge was found in range.
      */
-    public static Split find (double lat, double lon, double searchRadiusMeters, StreetLayer streetLayer,
+    public static Split find (double lat, double lon, double searchRadiusMeters, RoutableStreetLayer streetLayer,
                               StreetMode streetMode) {
 
         // After this conversion, the entire geometric calculation is happening in fixed precision int degrees.
