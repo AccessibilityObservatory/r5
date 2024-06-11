@@ -1,7 +1,7 @@
 package com.conveyal.r5.streets;
 
 import org.locationtech.jts.geom.*;
-import org.locationtech.jts.index.quadtree.Quadtree;
+import org.locationtech.jts.index.strtree.STRtree;
 
 import java.util.List;
 
@@ -12,17 +12,17 @@ import static com.conveyal.r5.streets.VertexStore.fixedDegreesToFloating;
  */
 public class LinkBarrierLayer {
     private GeometryFactory geomFactory;
-    private Quadtree featureIndex;
+    private STRtree featureIndex;
 
     public LinkBarrierLayer(GeometryCollection geoms) {
-        this.geomFactory = new GeometryFactory();
-        this.featureIndex = new Quadtree();
-
+        geomFactory = new GeometryFactory();
+        featureIndex = new STRtree();
         // Build index of geometries to speed up intersection testing
         for (GeometryCollectionIterator it = new GeometryCollectionIterator(geoms); it.hasNext(); ) {
             Geometry g = (Geometry) it.next();
             featureIndex.insert(g.getEnvelopeInternal(), g);
         }
+
     }
 
     boolean intersects(Geometry q) {
