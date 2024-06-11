@@ -51,6 +51,20 @@ public class LinkBarrierLayer {
         return new LinkBarrierLayer(collection);
     }
 
+    public static LinkBarrierLayer fromGeopackage(String path) throws IOException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("dbtype", "geopkg");
+        params.put("database", path);
+        params.put("read-only", true);
+
+        DataStore dataStore = DataStoreFinder.getDataStore(params);
+        String typeName = dataStore.getTypeNames()[0];
+        FeatureSource<SimpleFeatureType, SimpleFeature> source = dataStore.getFeatureSource(typeName);
+        FeatureCollection<SimpleFeatureType, SimpleFeature> collection = source.getFeatures();
+
+        return new LinkBarrierLayer(collection);
+    }
+
     boolean intersects(Geometry q) {
         List<SimpleFeature> candidates = featureIndex.query(q.getEnvelopeInternal());
         for (SimpleFeature f: candidates) {
