@@ -52,6 +52,8 @@ public class TransportNetwork implements Serializable {
 
     public TransitLayer transitLayer;
 
+    public com.conveyal.r5.streets.LinkBarrierLayer linkBarrierLayer;
+
     /**
      * This stores any number of lightweight scenario networks built upon the current base network.
      * FIXME that sounds like a memory leak, should be a WeighingCache or at least size-limited.

@@ -125,6 +125,20 @@ public class Split {
                 // Note: the fraction is scaleless, xScale is accounted for in the segmentFraction function.
                 curr.fixedLon = (int)(fixedLon0 + curr.frac * (fixedLon1 - fixedLon0));
                 curr.fixedLat = (int)(fixedLat0 + curr.frac * (fixedLat1 - fixedLat0));
+                // If this candidate link crosses any barriers, move on
+                if (streetLayer.parentNetwork.linkBarrierLayer != null) {
+                    if (streetLayer.parentNetwork.linkBarrierLayer.intersects(fixedLon, fixedLat, curr.fixedLon, curr.fixedLat)) {
+                        System.out.println(
+                            "link," +
+                            "blocked," +
+                            lat + "," +
+                            lon + "," +
+                            VertexStore.fixedDegreesToFloating(curr.fixedLat) + "," +
+                            VertexStore.fixedDegreesToFloating(curr.fixedLon)
+                        );
+                        return;
+                    }
+                }
                 // Find squared distance to edge (avoid taking square root, which is slow)
                 long dx = (long)((curr.fixedLon - fixedLon) * cosLat);
                 long dy = (long) (curr.fixedLat - fixedLat);
@@ -200,6 +214,14 @@ public class Split {
         double distanceToEdge_fixedDegrees = FastMath.sqrt(best.distanceToEdge_squaredFixedDegrees);
         double distanceToEdge_floatingDegrees = VertexStore.fixedDegreesToFloating(distanceToEdge_fixedDegrees);
         best.distanceToEdge_mm = (int) (distanceToEdge_floatingDegrees * metersPerDegreeLat * 1000);
+        System.out.println(
+            "link," +
+            "ok," +
+            lat + "," +
+            lon + "," +
+            VertexStore.fixedDegreesToFloating(best.fixedLat) + "," +
+            VertexStore.fixedDegreesToFloating(best.fixedLon)
+        );
         return best;
     }
 
