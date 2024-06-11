@@ -36,6 +36,7 @@ public class LinkBarrierLayer {
                 featureIndex.insert(env, feature);
             }
         }
+        System.out.println("Loaded " + featureIndex.size() + " barrier features");
     }
 
     public static LinkBarrierLayer fromShapefile(String path) throws IOException {
