@@ -104,7 +104,12 @@ public class TypeOfEdgeLabeler {
             backFlags.add(EdgeStore.EdgeFlag.STAIRS);
         }
         // Tunnels, covered roads and motorways are unlikely places for origins, destinations, or park and rides.
-        if (!(way.hasTag("tunnel", "yes") || way.hasTag("covered", "yes") || way.hasTag("highway", "motorway"))) {
+        if (!(
+                way.hasTag("tunnel", "yes")
+                || way.hasTag("covered", "yes")
+                || way.hasTag("highway", "motorway")
+                || way.hasTag("service")
+        )) {
             forwardFlags.add(EdgeStore.EdgeFlag.LINKABLE);
             backFlags.add(EdgeStore.EdgeFlag.LINKABLE);
         }
